@@ -28,8 +28,8 @@ public class GameManager : MonoBehaviour
     Dictionary<string, int> rankDic = new Dictionary<string, int>();
 
     [HideInInspector] public List<GameObject> EnemiesInFullRange = new List<GameObject>();
-    [HideInInspector] public const int MAX_UNITS = 20;
-    [HideInInspector] public const int MAX_ENEMIES = 20;
+    [HideInInspector] public const int MAX_UNITS = 10;
+    [HideInInspector] public const int MAX_ENEMIES = 10;
 
     public static GameManager Instance
     {

@@ -24,6 +24,8 @@ public class PlayerAttackCircle : AttackCircle, IAttackCircleUIInterface, IAttac
 
     private bool isStunned = false;
 
+    public GameObject MoveObj => moveObj;
+
     protected override void Awake()
     {
         base.Awake();
