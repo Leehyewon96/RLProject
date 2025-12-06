@@ -295,13 +295,21 @@ public class CharacterBase : MonoBehaviour, ICharacterProjectileInterface
             case CharacterType.ElPrimo:
             case CharacterType.Colt:
                 if (target.TryGetComponent<CharacterBase>(out _) && !isAttacking)
-                    MoveToEnemy(target);
-                    //Attack(target);
+                {
+                    if(GameManager.Instance.TrainingMode)
+                        Attack(target);
+                    else
+                        MoveToEnemy(target);
+                }
                 break;
             case CharacterType.Greg:
                 if(target.TryGetComponent<MoneyTree>(out _) && !isAttacking)
-                    MoveToEnemy(target);
-                    //Attack(target);
+                {
+                    if (GameManager.Instance.TrainingMode)
+                        Attack(target);
+                    else
+                        MoveToEnemy(target);
+                }
                 break;
             default:
                 break;
@@ -407,7 +415,6 @@ public class CharacterBase : MonoBehaviour, ICharacterProjectileInterface
     protected virtual void Attack(GameObject target)
     {
         if (isAttacking) return;
-
         navMeshAgent.enabled = false;
 
         if (coroutineAttack != null) return;

@@ -156,6 +156,12 @@ public class CharacterPlayer : CharacterBase, ICharacterPlayerItemInterface
     protected override void Attack(GameObject target)
     {
         if (target == null) return;
+        if(GameManager.Instance.TrainingMode)
+        {
+            if (Vector3.Distance(target.transform.position, gameObject.transform.position) > 5f)
+                return;
+        }
+
         base.Attack(target);
         
         //AttackTarget(target);

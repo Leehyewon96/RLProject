@@ -1,4 +1,4 @@
-using Photon.Pun;
+ï»¿using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -82,6 +82,9 @@ public class PlayerAttackCircle : AttackCircle, IAttackCircleUIInterface, IAttac
             transform.position = pos;
         }
 
+        if(GameManager.Instance.TrainingMode)
+            transform.position = pos;
+
         foreach (var owner in owners)
         {
             if(owner.gameObject.activeSelf)
@@ -130,20 +133,24 @@ public class PlayerAttackCircle : AttackCircle, IAttackCircleUIInterface, IAttac
                 return;
             }
 
-            //¸ÓÁöÇÒ ¼ö ÀÖ´ÂÁö °Ë»ç
-            if(newOwner.GetCharacterLevel() == CharacterLevel.End - 1)
+            
+            if(!GameManager.Instance.TrainingMode)
             {
-                return;
-            }
-            List<CharacterBase> chars = owners.FindAll(o => o.gameObject.activeSelf &&
-            o.GetCharacterType() == newOwner.GetCharacterType() &&
-            o.GetCharacterLevel() == newOwner.GetCharacterLevel()).ToList();
-            if (chars.Count < 3)
-            {
-                return;
-            }
+                //ë¨¸ì§€í•  ìˆ˜ ìžˆëŠ”ì§€ ê²€ì‚¬
+                if (newOwner.GetCharacterLevel() == CharacterLevel.End - 1)
+                {
+                    return;
+                }
+                List<CharacterBase> chars = owners.FindAll(o => o.gameObject.activeSelf &&
+                o.GetCharacterType() == newOwner.GetCharacterType() &&
+                o.GetCharacterLevel() == newOwner.GetCharacterLevel()).ToList();
+                if (chars.Count < 3)
+                {
+                    return;
+                }
 
-            StartCoroutine(CoMergeCharacter(chars, newOwner.transform.position));
+                StartCoroutine(CoMergeCharacter(chars, newOwner.transform.position));
+            }
         }
     }
 
@@ -176,7 +183,7 @@ public class PlayerAttackCircle : AttackCircle, IAttackCircleUIInterface, IAttac
 
     protected virtual bool CheckInput()
     {
-        //¸ð¹ÙÀÏ¿¡¼­ ÅÍÄ¡·Î º¯°æ
+        //ëª¨ë°”ì¼ì—ì„œ í„°ì¹˜ë¡œ ë³€ê²½
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
         {
             characterController.enabled = true;

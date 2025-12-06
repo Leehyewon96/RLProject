@@ -20,6 +20,11 @@ public class TreasureBoxItem : Item
 
     protected override void OnTriggerEnter(Collider other)
     {
+        if(GameManager.Instance.TrainingMode)
+        {
+            return;
+        }
+
         if (isPicked)
         {
             return;

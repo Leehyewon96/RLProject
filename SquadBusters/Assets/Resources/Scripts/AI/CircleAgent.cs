@@ -146,20 +146,26 @@ public class CircleAgent : Agent
 
         Vector3 moveDir = new Vector3(moveX, 0, moveZ).normalized;
 
-        circle.transform.position += moveDir * 5f * Time.deltaTime;
+        circle.MoveObj.transform.position += moveDir * 5f * Time.deltaTime;
 
         // 회전 (이동하는 방향 바라보기)
         if (moveDir != Vector3.zero)
         {
-            circle.transform.forward = Vector3.Slerp(transform.forward, moveDir, 10f * Time.deltaTime);
+            circle.MoveObj.transform.forward = Vector3.Slerp(transform.forward, moveDir, 10f * Time.deltaTime);
         }
+
+        // 인덱스 2번 값 (-1.0 ~ 1.0 사이의 값이 들어옴)
+        float strategySignal = actions.ContinuousActions[2];
+
+        // 값이 0보다 크면 1번 전략, 작으면 0번 전략
+        int action = strategySignal > 0 ? 1 : 0;
 
         //공격
         if (GameManager.Instance.attackCircle == null) return;
         if (!GameManager.Instance.attackCircle.TryGetComponent<PlayerAttackCircle>(out PlayerAttackCircle attackCircle)) return;
         var units = attackCircle.GetOwners;
 
-        int action = actions.DiscreteActions[0];
+        //int action = actions.DiscreteActions[0];
         if (trainingManager == null) return;
         GameObject target = null;
         Item item = null;
