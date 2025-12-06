@@ -1,5 +1,5 @@
 number,name,maxHp,coin,gem,attackDamage
-0,ElPrimo,2800,0,0,5000
+0,ElPrimo,2800,0,0,50
 1,Greg,1600,0,0,119
 2,Colt,900,0,0,50
 3,Mavis,1300,0,0,75
