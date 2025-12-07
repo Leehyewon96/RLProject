@@ -618,6 +618,8 @@ GameObject:
   - component: {fileID: 1510268865294268382}
   - component: {fileID: 5076228924023001655}
   - component: {fileID: 396144336935090718}
+  - component: {fileID: 3584220489113668522}
+  - component: {fileID: 2036871309246458104}
   m_Layer: 6
   m_Name: EnemyFollowedNPC
   m_TagString: Untagged
@@ -653,7 +655,7 @@ Animator:
   m_GameObject: {fileID: 2272855640038774138}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: cfbfb95b5f2b90949be0b5faab2775fb, type: 3}
-  m_Controller: {fileID: 9100000, guid: 514a68d76a8863f408b94a3002fb5cdc, type: 2}
+  m_Controller: {fileID: 9100000, guid: a5775b3120c8c92419b9a4f97aa8d449, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -684,7 +686,7 @@ CharacterController:
   m_GameObject: {fileID: 2272855640038774138}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Height: 3
   m_Radius: 0.8
@@ -703,7 +705,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.8
-  m_Speed: 3.5
+  m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -786,6 +788,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 1
     Name: ContactEnemy
+  - Type: 1
+    SynchronizeType: 0
+    Name: moveSpeed
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -804,7 +809,35 @@ MonoBehaviour:
   characterType: 0
   hpBarOrigin: {fileID: 0}
   attackCircleOrigin: {fileID: 0}
-  navAgent: {fileID: 7103092704673930399}
+--- !u!65 &3584220489113668522
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2272855640038774138}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 3, z: 1}
+  m_Center: {x: 0, y: 1.5, z: 0}
+--- !u!54 &2036871309246458104
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2272855640038774138}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2418383334023700969
 GameObject:
   m_ObjectHideFlags: 0
