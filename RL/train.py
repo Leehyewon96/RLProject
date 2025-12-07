@@ -54,7 +54,7 @@ def main():
     # ★ [핵심 2] 유니티 환경 로드 (side_channels 등록 필수!)
     try:
         unity_env = UnityEnvironment(
-            file_name=build_path,       # 에디터에서 실행하려면 None으로 변경
+            file_name=None,       # 에디터에서 실행하려면 None으로 변경
             worker_id=0, 
             no_graphics=True,           # 그래픽 없이 빠르게 (확인용이면 False)
             side_channels=[stats_channel] 

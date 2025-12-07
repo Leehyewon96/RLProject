@@ -18,7 +18,6 @@ public enum CharacterType
     BabyDragon,
     Golem,
     Boller,
-    EnemyFollowed,
 
     End,
 }
@@ -235,7 +234,7 @@ public class CharacterBase : MonoBehaviour, ICharacterProjectileInterface
 
     public virtual void SetDestination(Vector3 destination)
     {
-        if(navMeshAgent == null || !navMeshAgent.enabled || !navMeshAgent.isActiveAndEnabled)
+        if(navMeshAgent == null || !navMeshAgent.enabled || !navMeshAgent.isActiveAndEnabled || !navMeshAgent.isOnNavMesh)
         {
             return;
         }
@@ -248,7 +247,7 @@ public class CharacterBase : MonoBehaviour, ICharacterProjectileInterface
 
     public virtual void ResetPath()
     {
-        if (navMeshAgent == null || !navMeshAgent.enabled || !gameObject.activeSelf)
+        if (navMeshAgent == null || !navMeshAgent.enabled || !gameObject.activeSelf || !navMeshAgent.isOnNavMesh)
         {
             return;
         }
@@ -272,7 +271,7 @@ public class CharacterBase : MonoBehaviour, ICharacterProjectileInterface
     {
         if (DetectedEnemies.Count > 0)
         {
-            GameObject target = DetectedEnemies.Find(e => e != null && !e.GetComponent<CharacterBase>().isDead && e.gameObject != gameObject);
+            GameObject target = DetectedEnemies.Find(e => e != null && !e.GetComponent<CharacterBase>().isDead);
             if (target != null)
             {
                 return target;
@@ -296,18 +295,13 @@ public class CharacterBase : MonoBehaviour, ICharacterProjectileInterface
             case CharacterType.ElPrimo:
             case CharacterType.Colt:
                 if (target.TryGetComponent<CharacterBase>(out _) && !isAttacking)
-                {
                     MoveToEnemy(target);
-                }
+                    //Attack(target);
                 break;
             case CharacterType.Greg:
                 if(target.TryGetComponent<MoneyTree>(out _) && !isAttacking)
-                {
-                    if (GameManager.Instance.TrainingMode)
-                        Attack(target);
-                    else
-                        MoveToEnemy(target);
-                }
+                    MoveToEnemy(target);
+                    //Attack(target);
                 break;
             default:
                 break;
@@ -413,6 +407,7 @@ public class CharacterBase : MonoBehaviour, ICharacterProjectileInterface
     protected virtual void Attack(GameObject target)
     {
         if (isAttacking) return;
+
         navMeshAgent.enabled = false;
 
         if (coroutineAttack != null) return;

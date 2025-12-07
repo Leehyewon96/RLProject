@@ -1,4 +1,4 @@
-ï»¿using Photon.Pun;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,8 +23,6 @@ public class PlayerAttackCircle : AttackCircle, IAttackCircleUIInterface, IAttac
     protected CircleAgent agent;
 
     private bool isStunned = false;
-
-    public GameObject MoveObj => moveObj;
 
     protected override void Awake()
     {
@@ -82,9 +80,6 @@ public class PlayerAttackCircle : AttackCircle, IAttackCircleUIInterface, IAttac
             transform.position = pos;
         }
 
-        if(GameManager.Instance.TrainingMode)
-            transform.position = pos;
-
         foreach (var owner in owners)
         {
             if(owner.gameObject.activeSelf)
@@ -133,24 +128,20 @@ public class PlayerAttackCircle : AttackCircle, IAttackCircleUIInterface, IAttac
                 return;
             }
 
-            
-            if(!GameManager.Instance.TrainingMode)
+            //¸ÓÁöÇÒ ¼ö ÀÖ´ÂÁö °Ë»ç
+            if(newOwner.GetCharacterLevel() == CharacterLevel.End - 1)
             {
-                //ë¨¸ì§€í•  ìˆ˜ ìžˆëŠ”ì§€ ê²€ì‚¬
-                if (newOwner.GetCharacterLevel() == CharacterLevel.End - 1)
-                {
-                    return;
-                }
-                List<CharacterBase> chars = owners.FindAll(o => o.gameObject.activeSelf &&
-                o.GetCharacterType() == newOwner.GetCharacterType() &&
-                o.GetCharacterLevel() == newOwner.GetCharacterLevel()).ToList();
-                if (chars.Count < 3)
-                {
-                    return;
-                }
-
-                StartCoroutine(CoMergeCharacter(chars, newOwner.transform.position));
+                return;
             }
+            List<CharacterBase> chars = owners.FindAll(o => o.gameObject.activeSelf &&
+            o.GetCharacterType() == newOwner.GetCharacterType() &&
+            o.GetCharacterLevel() == newOwner.GetCharacterLevel()).ToList();
+            if (chars.Count < 3)
+            {
+                return;
+            }
+
+            StartCoroutine(CoMergeCharacter(chars, newOwner.transform.position));
         }
     }
 
@@ -183,7 +174,7 @@ public class PlayerAttackCircle : AttackCircle, IAttackCircleUIInterface, IAttac
 
     protected virtual bool CheckInput()
     {
-        //ëª¨ë°”ì¼ì—ì„œ í„°ì¹˜ë¡œ ë³€ê²½
+        //¸ð¹ÙÀÏ¿¡¼­ ÅÍÄ¡·Î º¯°æ
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
         {
             characterController.enabled = true;

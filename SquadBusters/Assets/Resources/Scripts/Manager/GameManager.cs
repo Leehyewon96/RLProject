@@ -1,15 +1,9 @@
-ï»¿using Photon.Pun;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
-public enum TrainingState
-{
-    Attack,
-    Move,
-}
 
 public class GameManager : MonoBehaviour
 {
@@ -20,26 +14,22 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ProjectileManager projectileManager;
     [HideInInspector] public AOEManager aoeManager;
     [HideInInspector] public SoundManager soundManager;
-    [HideInInspector] public CharacterNonPlayer enemyFollowed;
     private PhotonView photonView;
     public GameObject attackCircle;
     public bool isConnect { get; set; } = false;
     public bool endGame { get; set; } = false;
 
     public int treasureBoxCost { get; private set; } = 0;
-    private int playTime = 36000;
+    private int playTime = 3600;
 
-    public string userName = "í”„ë£¨ë‹ˆ";
+    public string userName = "ÇÁ·ç´Ï";
 
     private List<PlayerAttackCircleSpawnPoint> playerSpawnPoints = new List<PlayerAttackCircleSpawnPoint>();
     Dictionary<string, int> rankDic = new Dictionary<string, int>();
 
     [HideInInspector] public List<GameObject> EnemiesInFullRange = new List<GameObject>();
-    [HideInInspector] public const int MAX_UNITS = 10;
-    [HideInInspector] public const int MAX_ENEMIES = 10;
-
-    public bool TrainingMode = false;
-    public bool ChangeActionToMove = false;
+    [HideInInspector] public const int MAX_UNITS = 20;
+    [HideInInspector] public const int MAX_ENEMIES = 20;
 
     public static GameManager Instance
     {
@@ -140,35 +130,13 @@ public class GameManager : MonoBehaviour
         if (PhotonNetwork.IsMasterClient)
         {
             SpawnCharacter();
-            if (GameManager.instance.TrainingMode)
-            {
-                PlayerAttackCircle circle = attackCircle.GetComponent<PlayerAttackCircle>();
-                int unitCount = MAX_UNITS / 2;
-                for (int i = 0; i < 3; i++)
-                {
-                    circle.SpawnCharacter(transform.position, CharacterType.ElPrimo, CharacterLevel.Classic);
-                }
-                for (int i = 0; i < 3; i++)
-                {
-                    circle.SpawnCharacter(transform.position, CharacterType.ElPrimo, CharacterLevel.Ultra);
-                }
-                for (int i = 0; i < 2; i++)
-                {
-                    circle.SpawnCharacter(transform.position, CharacterType.Colt, CharacterLevel.Classic);
-                }
-                for (int i = 0; i < 2; i++)
-                {
-                    circle.SpawnCharacter(transform.position, CharacterType.Colt, CharacterLevel.Super);
-                }
-            }
-
         }
 
         UpdateRank(userName, 0);
         SetTreasureBoxCost(treasureBoxCost);
     }
 
-    //ê²Œìž„ì‹œìž‘ì‹œ ìµœì´ˆë¡œ AttackCircle, Player ìŠ¤í°ì‹œí‚¤ëŠ” í•¨ìˆ˜
+    //°ÔÀÓ½ÃÀÛ½Ã ÃÖÃÊ·Î AttackCircle, Player ½ºÆù½ÃÅ°´Â ÇÔ¼ö
     public void SpawnCharacter()
     {
         playerSpawnPoints = FindObjectsOfType<PlayerAttackCircleSpawnPoint>().ToList();
@@ -186,7 +154,6 @@ public class GameManager : MonoBehaviour
     public void RPCSpawnCharacter(Vector3 pos)
     {
         string path = $"Prefabs/Character/PlayerAttackCircle";
-
         attackCircle = PhotonNetwork.Instantiate(path, pos, Quaternion.identity);
         Camera.main.GetComponent<CameraFollow>().SetTarget(attackCircle.gameObject);
         PlayerAttackCircle circle = attackCircle.GetComponent<PlayerAttackCircle>();
@@ -211,7 +178,7 @@ public class GameManager : MonoBehaviour
                 rankDic[name] = gemCnt;
             }
 
-            //ì •ë ¬
+            //Á¤·Ä
             var rank = rankDic.OrderByDescending(r => r.Value).ToList();
 
             int order = 1;
