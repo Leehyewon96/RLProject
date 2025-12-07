@@ -9,6 +9,8 @@ public class CharacterSpawner : Spawner
     {
         base.Awake();
         repeatInterval = 10f;
+        if(characterType == CharacterType.EnemyFollowed)
+            repeatInterval = 5f;
         if (characterType < CharacterType.Eggy)
         {
             SetPath($"Prefabs/Character/PlayerAttackCircle");
