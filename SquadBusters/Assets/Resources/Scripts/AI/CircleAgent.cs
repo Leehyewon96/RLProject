@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using System.Collections;
+using System.Collections.Generic;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
@@ -92,9 +93,21 @@ public class CircleAgent : Agent
         }
 
         //적 정보
+        List<GameObject> enemies = new List<GameObject>(attackCircle.GetDetectedEnemies);
+        var chaser = GameManager.Instance.enemyFollowed;
+
+        // 추격자가 살아있는데 리스트에 없다면? -> 강제로 0번(최우선) 자리에 끼워 넣기
+        if (chaser != null && chaser.gameObject.activeSelf && !chaser.isDead)
+        {
+            if (!enemies.Contains(chaser.gameObject))
+            {
+                enemies.Insert(0, chaser.gameObject);
+            }
+        }
+
         for (int i = 0; i < GameManager.MAX_ENEMIES; i++)
         {
-            var enemies = attackCircle.GetDetectedEnemies;
+            //var enemies = attackCircle.GetDetectedEnemies;
 
             // 적이 감지 범위 안에 있고 인덱스가 유효할 때
             if (i < enemies.Count && enemies[i] != null)
