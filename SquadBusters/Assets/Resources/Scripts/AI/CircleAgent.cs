@@ -45,6 +45,13 @@ public class CircleAgent : Agent
         lastPosition = transform.position;
     }
 
+    public override void OnEpisodeBegin()
+    {
+        // 에이전트(나) 위치 리셋 (중앙 근처 랜덤)
+        circle.MoveObj.transform.position += new Vector3(Random.Range(-2f, 2f), 0, Random.Range(-2f, 2f));
+        trainingManager.ResetEnemyFollowed();
+    }
+
     public override void CollectObservations(VectorSensor sensor)
     {
         // 내 자신의 위치와 속도 정보

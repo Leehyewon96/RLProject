@@ -18,6 +18,7 @@ public enum CharacterType
     BabyDragon,
     Golem,
     Boller,
+    EnemyFollowed,
 
     End,
 }

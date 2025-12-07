@@ -117,6 +117,21 @@ public class TrainingManager : MonoBehaviour
         return null;
     }
 
+    public void ResetEnemyFollowed()
+    {
+        // 적(Enemy) 위치 리셋 (나랑 좀 떨어진 곳 랜덤)
+        float randX = Random.Range(-8f, 8f);
+        float randZ = Random.Range(-8f, 8f);
+
+        // 적 오브젝트 찾아서 이동 (TrainingManager 등을 통해 가져오세요)
+        if (GameManager.Instance.enemyFollowed != null)
+        {
+            GameManager.Instance.enemyFollowed.transform.localPosition = agent.transform.position + new Vector3(randX, 0, randZ);
+            // 적 체력 100으로 리셋
+            GameManager.Instance.enemyFollowed.Init();
+        }
+    }
+
     public void OnEnemyKill()
     {
         agent.AddReward(RewardConstant.KillEnemyScore);

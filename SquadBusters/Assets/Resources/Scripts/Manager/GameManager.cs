@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ProjectileManager projectileManager;
     [HideInInspector] public AOEManager aoeManager;
     [HideInInspector] public SoundManager soundManager;
+    [HideInInspector] public CharacterNonPlayer enemyFollowed;
     private PhotonView photonView;
     public GameObject attackCircle;
     public bool isConnect { get; set; } = false;
