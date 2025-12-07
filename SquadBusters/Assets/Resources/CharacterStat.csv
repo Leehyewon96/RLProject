@@ -1,7 +1,7 @@
 number,name,maxHp,coin,gem,attackDamage
-0,ElPrimo,2800,0,0,50
+0,ElPrimo,2800,0,0,10
 1,Greg,1600,0,0,119
-2,Colt,900,0,0,50
+2,Colt,900,0,0,10
 3,Mavis,1300,0,0,75
 4,Golem,600,5,15,50
 5,BabyDragon,5000,7,15,76
@@ -11,3 +11,4 @@ number,name,maxHp,coin,gem,attackDamage
 9,Kiwi,300,2,0,20
 10,Chilli,300,2,0,20
 11,Boller,1200,4,1,23
+12,EnemyFollowed,1200,4,1,23
