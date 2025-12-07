@@ -272,7 +272,7 @@ public class CharacterBase : MonoBehaviour, ICharacterProjectileInterface
     {
         if (DetectedEnemies.Count > 0)
         {
-            GameObject target = DetectedEnemies.Find(e => e != null && !e.GetComponent<CharacterBase>().isDead);
+            GameObject target = DetectedEnemies.Find(e => e != null && !e.GetComponent<CharacterBase>().isDead && e.gameObject != gameObject);
             if (target != null)
             {
                 return target;
@@ -297,10 +297,7 @@ public class CharacterBase : MonoBehaviour, ICharacterProjectileInterface
             case CharacterType.Colt:
                 if (target.TryGetComponent<CharacterBase>(out _) && !isAttacking)
                 {
-                    if(GameManager.Instance.TrainingMode)
-                        Attack(target);
-                    else
-                        MoveToEnemy(target);
+                    MoveToEnemy(target);
                 }
                 break;
             case CharacterType.Greg:

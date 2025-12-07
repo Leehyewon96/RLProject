@@ -5,6 +5,12 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum TrainingState
+{
+    Attack,
+    Move,
+}
+
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
@@ -33,6 +39,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public const int MAX_ENEMIES = 10;
 
     public bool TrainingMode = false;
+    public bool ChangeActionToMove = false;
 
     public static GameManager Instance
     {

@@ -27,6 +27,7 @@ public class CircleAgent : Agent
     private Vector3 currentVelocity;
 
     float maxDistance = 10f;
+    int prevAction = -1;
 
     private void Awake()
     {
@@ -166,6 +167,11 @@ public class CircleAgent : Agent
 
         // 값이 0보다 크면 1번 전략, 작으면 0번 전략
         int action = strategySignal > 0 ? 1 : 0;
+        GameManager.Instance.ChangeActionToMove = (action == 0 && prevAction == 1);
+        if (action != prevAction)
+        {
+            prevAction = action;
+        }
 
         //공격
         if (GameManager.Instance.attackCircle == null) return;

@@ -40,6 +40,11 @@ public class Colt : CharacterPlayer
         {
             if (gameObject.activeSelf)
             {
+                if(coroutineAttack != null)
+                {
+                    StopCoroutine(coroutineAttack);
+                }
+
                 coroutineAttack = StartCoroutine(CoAttack(target));
             }
         };
@@ -48,7 +53,7 @@ public class Colt : CharacterPlayer
 
     protected override IEnumerator CoAttack(GameObject target)
     {
-        int cnt = 4;
+        int cnt = 1;
         animator.SetBool(AnimLocalize.contactEnemy, true);
         while (cnt > 0)
         {

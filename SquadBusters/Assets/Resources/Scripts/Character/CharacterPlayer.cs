@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 
 
@@ -79,11 +80,19 @@ public class CharacterPlayer : CharacterBase, ICharacterPlayerItemInterface
             Move(x, z);
             //animator.SetFloat(AnimLocalize.moveSpeed, characterController.velocity.magnitude);
         }
-        else // 플레이어 조작없으면 AI 동작
+        else if(GameManager.Instance.TrainingMode && GameManager.Instance.ChangeActionToMove)// 플레이어 조작없으면 AI 동작
         {
-            //animator.SetFloat(AnimLocalize.moveSpeed, 0);
-            //GameObject target = GetTarget();
-            //MoveToEnemy(target);
+            StopAllCoroutines();
+            //ResetPath();
+            isAttacking = false;
+            if (coroutineAttack != null)
+            {
+                StopCoroutine(coroutineAttack);
+                coroutineAttack = null;
+            }
+
+            //DetectedEnemies.Clear();
+            animator.SetBool(AnimLocalize.contactEnemy, false);
         }
     }
 
